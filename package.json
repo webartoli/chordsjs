@@ -1,0 +1,23 @@
+{
+  "name": "chordsjs",
+  "version": "0.0.1",
+  "description": "Chords module",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webartoli/chordsjs.git"
+  },
+  "keywords": [
+    "songs",
+    "chords"
+  ],
+  "author": "Claudio Bartoli",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webartoli/chordsjs/issues"
+  },
+  "homepage": "https://github.com/webartoli/chordsjs#readme"
+}
