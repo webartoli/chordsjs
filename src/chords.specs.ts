@@ -7,15 +7,16 @@ var assert = chai.assert
 
 describe('chords parser', () => {
 
-    describe('simple note DoReMi', () => {
-        
-        let parser = new Chords.ChordParser()
+    let parser = new Chords.ChordParser()
 
-        it ('lower case chord', () => {
+    describe('simple note DoReMi', () => {
+
+
+        it('lower case chord', () => {
             assert.equal(parser.Parse("do"), Chords.Note.Do)
         })
-        
-        it ('upper case chord', () => {
+
+        it('upper case chord', () => {
             assert.equal(parser.Parse("DO"), Chords.Note.Do)
         })
 
@@ -50,8 +51,7 @@ describe('chords parser', () => {
             { input: "B", expected: Chords.Note.Si }
         ]
 
-        let parser = new Chords.ChordParser()
-        parser.SetABC()
+        let parser = new Chords.ChordParser().SetABC()
 
         for (let test of cases) {
             it(test.input, () => {
@@ -59,31 +59,29 @@ describe('chords parser', () => {
             })
         }
 
-        it ('fail on lowercase letters', () => {
+        it('fail on lowercase letters', () => {
             assert.throws(() => parser.Parse("a"), Chords.UnexpectedInputError)
         })
     })
 
-    describe('complex chords', ()=> {
-        it ('with bemolle', () => {
-            let parser = new Chords.ChordParser()
+    parser.SetDoReMi();
+
+    describe('complex chords', () => {
+        it('with bemolle', () => {
             assert.equal(parser.Parse("Mib"), Chords.Note.MiBemolle)
         })
 
-        it ('with space and bemolle', () => {
-            let parser = new Chords.ChordParser()
+        it('with space and bemolle', () => {
             assert.equal(parser.Parse("Mi b"), Chords.Note.MiBemolle)
-        }) 
-        
-        it ('with space and diesis', () => {
-            let parser = new Chords.ChordParser().SetABC()
-            assert.equal(parser.Parse("C #"), Chords.Note.DoDiesis)
+        })
+
+        it('with space and diesis', () => {
+            assert.equal(parser.Parse("Do #"), Chords.Note.DoDiesis)
         })
     })
 
     describe('not a chord', () => {
         it('custom error with no chord string', () => {
-            let parser = new Chords.ChordParser()
             assert.throws(() => parser.Parse("test"), Chords.UnexpectedInputError)
         })
     })
