@@ -3,7 +3,6 @@
 'use strict';
 import chai = require('chai');
 import Chords = require('./chords');
-
 var assert = chai.assert;
 
 describe('chords parser', () => {
@@ -12,6 +11,8 @@ describe('chords parser', () => {
 
         let cases = [
             { input: "Do", expected: Chords.Note.Do },
+            { input: "do", expected: Chords.Note.Do },
+            { input: "DO", expected: Chords.Note.Do },
             { input: "Re", expected: Chords.Note.Re },
             { input: "Mi", expected: Chords.Note.Mi },
             { input: "Fa", expected: Chords.Note.Fa },
@@ -30,7 +31,7 @@ describe('chords parser', () => {
         }
     });
 
-    
+
     describe('simple note ABC', () => {
 
         let cases = [
@@ -51,5 +52,33 @@ describe('chords parser', () => {
                 assert.equal(parser.Parse(test.input), test.expected);
             })
         }
+
+        it ('no not parse lowercase letters', () => {
+            assert.throws(() => parser.Parse("a"), Chords.UnexpectedInputError)
+        })
     });
+
+    describe('complex chords', ()=> {
+        it ('chord with bemolle', () => {
+            let parser = new Chords.ChordParser();
+            assert.equal(parser.Parse("Mib"), Chords.Note.MiBemolle)
+        })
+
+        it ('chord with space and bemolle', () => {
+            let parser = new Chords.ChordParser();
+            assert.equal(parser.Parse("Mi b"), Chords.Note.MiBemolle)
+        }) 
+        
+        it ('chord with space and diesis', () => {
+            let parser = new Chords.ChordParser().SetABC();
+            assert.equal(parser.Parse("C #"), Chords.Note.DoDiesis)
+        })
+    })
+
+    describe('not a chord', () => {
+        it('returns error with no chord string', () => {
+            let parser = new Chords.ChordParser();
+            assert.throws(() => parser.Parse("test"), Chords.UnexpectedInputError)
+        });
+    })
 });
