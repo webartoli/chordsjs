@@ -76,7 +76,11 @@ describe('chords parser', () => {
         })
 
         it('with space and diesis', () => {
-            assert.equal(parser.Parse("Do #"), Chords.Note.DoDiesis)
+            assert.equal(parser.Parse("Mi #"), Chords.Note.Fa)
+        })
+
+        it('with space and bemolle', () => {
+            assert.equal(parser.Parse("Fa b"), Chords.Note.Mi)
         })
     })
 
