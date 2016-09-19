@@ -1,14 +1,9 @@
 
 import { Note } from "./note"
+import { UnexpectedInputError } from "./errors/UnexpectedInputError"
+
 export * from './note';
-
-export class UnexpectedInputError extends Error {
-
-    constructor(public message?: string) {
-        super(message)
-        this.name = "UnexpectedInput"
-    }
-}
+export * from './errors/UnexpectedInputError'
 
 export class ChordParser {
 
