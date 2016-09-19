@@ -3,11 +3,17 @@ var tsc = require('gulp-tsc');
 var shell = require('gulp-shell');
 var runseq = require('run-sequence');
 var tslint = require('gulp-tslint');
+var browserSync = require("browser-sync");
+var Mocha = require('mocha');
 
 var paths = {
   tscripts: {
     src: ['src/**/*.ts', '!src/**/*.specs.ts'],
     dest: 'dist'
+  },
+  tests: {
+    result: 'results',
+    dir: 'test-results'
   }
 };
 
@@ -19,9 +25,29 @@ gulp.task('run', shell.task([
   'node dist/index.js'
 ]));
 
+gulp.task('mocha:web', shell.task([
+  'mocha --opts test/mocha.opts --watch --reporter mochawesome --reporter-options reportDir='+paths.tests.dir+',reportName='+paths.tests.result+',reportTitle="Songs.js",inlineAssets=true'
+]));
+
 gulp.task('buildrun', function (cb) {
   runseq('build', 'run', cb);
 });
+
+gulp.task("browser-sync", function () {
+  "use strict";
+  browserSync({
+    server: {
+      //serve tests and the root as base dirs
+      baseDir: ["./"+paths.tests.dir+"/", "./"],
+      //make tests.html the index file
+      index: paths.tests.result+".html"
+    }
+  });
+
+  gulp.watch("customReportDir/*.html").on('change', browserSync.reload);
+});
+
+gulp.task('test:watch:web', ['mocha:web', 'browser-sync']);
 
 // ** Watching ** //
 
