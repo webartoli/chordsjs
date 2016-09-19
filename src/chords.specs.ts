@@ -1,17 +1,16 @@
 /// <reference path="../typings/index.d.ts" />
 
 'use strict'
-import chai = require('chai')
-import Chords = require('./chords')
-var assert = chai.assert
+
+import {assert} from 'chai'
+import * as Chords from './chords'
 
 describe('chords parser', () => {
 
     let parser = new Chords.ChordParser()
 
     describe('simple note DoReMi', () => {
-
-
+        
         it('lower case chord', () => {
             assert.equal(parser.Parse("do"), Chords.Note.Do)
         })
