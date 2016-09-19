@@ -26,7 +26,7 @@ gulp.task('run', shell.task([
 ]));
 
 gulp.task('mocha:web', shell.task([
-  'mocha --opts test/mocha.opts --watch --reporter mochawesome --reporter-options reportDir='+paths.tests.dir+',reportName='+paths.tests.result+',reportTitle="Songs.js",inlineAssets=true'
+  'mocha --opts test/mocha.opts --watch --reporter mochawesome --reporter-options reportDir=' + paths.tests.dir + ',reportName=' + paths.tests.result + ',reportTitle="Songs.js",inlineAssets=true'
 ]));
 
 gulp.task('buildrun', function (cb) {
@@ -38,13 +38,13 @@ gulp.task("browser-sync", function () {
   browserSync({
     server: {
       //serve tests and the root as base dirs
-      baseDir: ["./"+paths.tests.dir+"/", "./"],
+      baseDir: ["./" + paths.tests.dir + "/", "./"],
       //make tests.html the index file
-      index: paths.tests.result+".html"
+      index: paths.tests.result + ".html"
     }
   });
 
-  gulp.watch("customReportDir/*.html").on('change', browserSync.reload);
+  gulp.watch(paths.tests.dir + "/*.html").on('change', browserSync.reload);
 });
 
 gulp.task('test:watch:web', ['mocha:web', 'browser-sync']);
