@@ -1,8 +1,9 @@
 
-import { Note } from "./note"
-import { UnexpectedInputError } from "./errors/UnexpectedInputError"
+import { Note } from './note'
+import { Chord } from './chord'
+import { UnexpectedInputError } from './errors/UnexpectedInputError'
 
-export * from './note';
+export * from './note'
 export * from './errors/UnexpectedInputError'
 
 export class ChordParser {
@@ -23,14 +24,14 @@ export class ChordParser {
     }
 
     public SetABC() {
-        this.Minor = "m"
+        this.Minor = 'm'
         this.Notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
         this.RegexOptions = ""
         return this
     }
 
     public SetDoReMi() {
-        this.Minor = "-"
+        this.Minor = '-'
         this.Notes = ['do', 're', 'mi', 'fa', 'sol', 'la', 'si']
         this.RegexOptions = "i" // case insensitive
         return this
@@ -46,17 +47,17 @@ export class ChordParser {
         var tokens = regex.exec(str)
 
         if (tokens === null) {
-            throw new UnexpectedInputError("Invalid String")
+            throw new UnexpectedInputError('Invalid String')
         }
 
         var notes = [Note.Do, Note.Re, Note.Mi, Note.Fa, Note.Sol, Note.La, Note.Si]
 
         for (let index in notes) {
-            let note = notes[index] as Note
-            let noteString = this.Notes[index]
 
-            if (RegExp(noteString, this.RegexOptions).exec(tokens[1]) === null) 
+            if (RegExp(this.Notes[index], this.RegexOptions).exec(tokens[1]) === null) 
                 continue // not this note, try another one
+
+            let note = notes[index] as Note
 
             if (RegExp(this.Diesis).exec(tokens[2]) !== null)
                 note++
@@ -67,6 +68,6 @@ export class ChordParser {
             return note
         }
 
-        throw new Error("Something went wrong")
+        throw new Error('Something went wrong')
     }
 }
