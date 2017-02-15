@@ -37,32 +37,42 @@ export default class ChordParser {
         return this
     }
 
-    public Parse(str: string): Note {
+    private Tokenize(str: string): { note: string, modifier: string } {
 
         var regex = RegExp(`(${this.Notes.join('|')})` + // note
             `(?: *)` + // optional spaces
             `(${this.Diesis}|${this.Bemolle})?`,
             `g${this.RegexOptions}`)
 
-        var tokens = regex.exec(str)
+        var array = regex.exec(str)
 
-        if (tokens === null) {
+        if (array === null) {
             throw new UnexpectedInputError('Invalid String')
         }
+
+        return {
+            note: array[1],
+            modifier: array[2]
+        }
+    }
+
+    public Parse(str: string): Note {
+
+        var tokens = this.Tokenize(str)
 
         var notes = [Note.Do, Note.Re, Note.Mi, Note.Fa, Note.Sol, Note.La, Note.Si]
 
         for (let index in notes) {
 
-            if (RegExp(this.Notes[index], this.RegexOptions).exec(tokens[1]) === null) 
+            if (RegExp(this.Notes[index], this.RegexOptions).exec(tokens.note) === null)
                 continue // not this note, try another one
 
             let note = notes[index] as Note
 
-            if (RegExp(this.Diesis).exec(tokens[2]) !== null)
+            if (RegExp(this.Diesis).exec(tokens.modifier) !== null)
                 note++
 
-            if (RegExp(this.Bemolle).exec(tokens[2]) !== null) 
+            if (RegExp(this.Bemolle).exec(tokens.modifier) !== null)
                 note--
 
             return note
