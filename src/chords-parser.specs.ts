@@ -4,8 +4,9 @@
 
 import {assert} from 'chai'
 import * as Parser from './chords-parser'
+import ChordParser from './chords-parser'
 
-let parser = new Parser.ChordParser()
+let parser = new ChordParser()
 
 describe('chords parser', () => {
 
@@ -47,7 +48,7 @@ describe('chords parser', () => {
             { input: "B", expected: Parser.Note.Si }
         ]
 
-        let parser = new Parser.ChordParser().SetABC()
+        let parser = new ChordParser().SetABC()
 
         for (let test of cases) {
             it(test.input, () => {

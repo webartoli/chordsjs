@@ -6,7 +6,7 @@ import { UnexpectedInputError } from './errors/UnexpectedInputError'
 export * from './note'
 export * from './errors/UnexpectedInputError'
 
-export class ChordParser {
+export default class ChordParser {
 
     private Notes: string[]
     private Modifiers: string[]
