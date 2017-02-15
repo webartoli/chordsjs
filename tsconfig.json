@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "module": "commonjs",
+        "outFile": "dist/chords.js"
+    },
+    "include": [
+        "src/"
+    ]
+}
