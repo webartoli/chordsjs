@@ -67,7 +67,8 @@ gulp.task('compile:typescript', function () {
     .src(paths.tscripts.src)
     .pipe(tsc({
       module: "commonjs",
-      emitError: false
+      emitError: false,
+      target: "es5"
     }))
     .pipe(gulp.dest(paths.tscripts.dest));
 });
